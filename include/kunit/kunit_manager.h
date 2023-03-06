@@ -1,8 +1,10 @@
-/*
- * thermal_exynos.h - Samsung EXYNOS TMU device tree definitions
+/* kunit_manager.h
  *
- *  Copyright (C) 2014 Samsung Electronics
- *  Lukasz Majewski <l.majewski@samsung.com>
+ * Driver to manage kunit
+ *
+ * Copyright (C) 2019 Samsung Electronics
+ *
+ * Sangsu Ha <sangsu.ha@samsung.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,13 +18,20 @@
  *
  */
 
-#ifndef _EXYNOS_THERMAL_TMU_DT_H
-#define _EXYNOS_THERMAL_TMU_DT_H
+#include <linux/kernel.h>
+#include <linux/module.h>
+#ifdef CONFIG_DRV_SAMSUNG
+#include <linux/sec_class.h>
+#else
+extern struct class *sec_class;
+#endif
 
-#define TYPE_ONE_POINT_TRIMMING 0
-#define TYPE_ONE_POINT_TRIMMING_25 1
-#define TYPE_ONE_POINT_TRIMMING_85 2
-#define TYPE_TWO_POINT_TRIMMING 3
-#define TYPE_NONE 4
+#include <linux/device.h>
 
-#endif /* _EXYNOS_THERMAL_TMU_DT_H */
+#ifdef CONFIG_KUNIT
+#include <kunit/test.h>
+#endif
+
+struct kunit_manager_data {
+	struct device *dev;
+};
